@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  db:
+    image: sengsathit/brief-mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: clients
+    ports:
+      - "3307:3306"  # port local différent si 3306 occupé
+    networks:
+      - backend-net
+
+  api:
+    image: sengsathit/brief-api:latest
+    container_name: api
+    ports:
+      - "5000:8000"
+    depends_on:
+      - db
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+    driver: bridge
