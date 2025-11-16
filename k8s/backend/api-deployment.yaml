@@ -46,20 +46,23 @@ spec:
             - containerPort: 5000
           resources:
             requests:
-              cpu: "800m"
-              memory: "1Gi"
+              cpu: "250m"
+              memory: "512Mi"
             limits:
-              cpu: "2"
-              memory: "3Gi"
+              cpu: "500"
+              memory: "1Gi"
           readinessProbe:
             httpGet:
               path: /health
               port: 8000
             initialDelaySeconds: 5
             periodSeconds: 5
+            timeoutSeconds: 2
           livenessProbe:
             httpGet:
               path: /health
               port: 8000
             initialDelaySeconds: 10
             periodSeconds: 10
+            timeoutSeconds: 2
+

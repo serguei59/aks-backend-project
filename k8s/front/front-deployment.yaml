@@ -1,27 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: front
+  name: streamlit
   namespace: sbuasa
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: front
+      app: streamlit
   template:
     metadata:
       labels:
-        app: front
+        app: streamlit
     spec:
       containers:
-        - name: front
+        - name: streamlit
           image: blackphoenix2020/streamlit-front:1.0.0
+          env:
+          - name: API_URL
+            value: "http://api.svc.cluster.local:5000"
           ports:
             - containerPort: 8501
           resources:
             requests:
-              cpu: "50m"
-              memory: "128Mi"
-            limits:
               cpu: "200m"
               memory: "256Mi"
+            limits:
+              cpu: "600m"
+              memory: "768Mi"
