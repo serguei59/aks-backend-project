@@ -7,35 +7,16 @@ on:
       - main
 
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push front image
-        uses: docker/build-push-action@v4
-        with:
-          context: ./front
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/streamlit-front:latest
-
   deploy-to-aks:
     runs-on: ubuntu-latest
-    needs: build-and-push
     steps:
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}   # service principal JSON
 
-      - name: Set AKS context
-        run: |
-          az aks get-credentials --resource-group RG_AKS_SBUASA --name cluster-sbuasa --admin
+      - name: Bootstrap AKS infra (RG, AKS, namespace, ingress)
+        run: bash ./scripts/aks-bootstrap.sh
+      
       - name: kubectl apply manifests
         run: |
           kubectl apply -f k8s/namespace.yaml

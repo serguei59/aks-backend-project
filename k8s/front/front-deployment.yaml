@@ -15,12 +15,19 @@ spec:
     spec:
       containers:
         - name: streamlit
-          image: blackphoenix2020/streamlit-front:1.0.0
+          image: blackphoenix2020/streamlit-front:1.0.1
           env:
-          - name: API_URL
-            value: "http://api.svc.cluster.local:5000"
+            # Mode Ingress
+            - name: API_MODE
+              value: "ingress"
+
+            # URL exposée par ton Ingress (à changer après déploiement du Ingress)
+            - name: API_URL
+              value: "http://EXTERNAL-IP/sbuasa-api"
+
           ports:
             - containerPort: 8501
+
           resources:
             requests:
               cpu: "200m"
