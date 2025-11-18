@@ -3,7 +3,7 @@ name: CI-CD AKS
 on:
   push:
     branches:
-      - feature/k8s
+      - feature/k8s_api-mysql
       - main
 
 jobs:
