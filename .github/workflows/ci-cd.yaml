@@ -10,12 +10,17 @@ jobs:
   deploy-to-aks:
     runs-on: ubuntu-latest
     steps:
-      - uses: azure/login@v1
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Azure login
+        uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}   # service principal JSON
 
       - name: Bootstrap AKS infra (RG, AKS, namespace, ingress)
-        run: bash ./scripts/aks_bootstrap.sh
+        run: |
+          bash ./scripts/aks_bootstrap.sh
       
       - name: kubectl apply manifests
         run: |
