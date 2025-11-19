@@ -4,8 +4,6 @@ metadata:
   name: sbuasa-ingress
   namespace: sbuasa
   annotations:
-    kubernetes.io/ingress.class: nginx
-
     # Réécriture du chemin pour l'API
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 
@@ -13,12 +11,13 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 
 spec:
+  ingressName: nginx
   rules:
-    - host: sbuasa.local    # tu peux mettre n’importe quel host ou le retirer
+    - host: sbuasa.local    # facultatif
       http:
         paths:
-          # API Flask
-          - path: /api/?(.*)
+          # API Back end
+          - path: /api(/|$)(.*)
             pathType: Prefix
             backend:
               service:
