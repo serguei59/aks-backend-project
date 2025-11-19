@@ -13,29 +13,41 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: sbuasa.local    # facultatif
+    - host: 172.189.159.252.nip.io
       http:
         paths:
           # API Back end
-          - path: /sbuasa(/|$)(.*)
-            pathType: Prefix
+          - path: /sbuasa
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: api
                 port:
                   number: 5000
-
-          # Front Streamlit
-          - path: /sbuasa
-            pathType: Prefix
+          - path: /sbuasa/health
+            pathType: ImplementationSpecific
             backend:
               service:
-                name: streamlit
+                name: api
                 port:
-                  number: 8501
-
-          - path: /
-            pathType: Prefix
+                  number: 5000
+          - path: /sbuasa/clients
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: api
+                port:
+                  number: 5000
+          - path: /sbuasa/clients/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: api
+                port:
+                  number: 5000
+          # Front Streamlit
+          - path: /sbuasa-streamlit
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: streamlit
