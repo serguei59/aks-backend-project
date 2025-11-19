@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 
 spec:
-  ingressName: nginx
+  ingressClassName: nginx
   rules:
     - host: sbuasa.local    # facultatif
       http:
