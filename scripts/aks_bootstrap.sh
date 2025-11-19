@@ -4,7 +4,6 @@ set -e
 RG="RG_AKS_SBUASA"
 AKS="cluster-sbuasa"
 LOCATION="francecentral"
-NS="sbuasa"
 
 echo "🔍 Checking Resource Group..."
 if ! az group show -n $RG >/dev/null 2>&1; then
@@ -35,16 +34,25 @@ echo "🔐 Getting AKS credentials..."
 az aks get-credentials --resource-group $RG --name $AKS --admin --overwrite-existing
 
 echo "⏳ Waiting for nodes to be ready..."
-kubectl wait --for=condition=Ready nodes --timeout=180s
+kubectl wait --for=condition=Ready nodes --all --timeout=600s
+
+echo "🔍 Checking ingress-nginx namespace..."
+if ! kubectl get namespace ingress-nginx >/dev/null 2>&1; then
+  echo "➡️ Creating namespace ingress-nginx..."
+  kubectl create namespace ingress-nginx
+else
+  echo "✔️ Namespace ingress-nginx already exists."
+fi
 
 echo "🌐 Checking NGINX Ingress Controller..."
-if ! kubectl get deployment ingress-nginx-controller -n $NS >/dev/null 2>&1; then
+if ! kubectl get deployment ingress-nginx-controller -n ingress-nginx >/dev/null 2>&1; then
   
+  echo "➡️ Adding Helm repository for ingress-nginx..."
   helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
   helm repo update
 
   echo "➡️ Installing ingress-nginx..."
-  helm install nginx ingress-nginx/ingress-nginx -n $NS
+  helm install ingress-nginx ingress-nginx/ingress-nginx -n $NS
 else
   echo "✔️ NGINX ingress controller already installed."
 fi
