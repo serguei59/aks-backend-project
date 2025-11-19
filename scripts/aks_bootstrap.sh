@@ -52,18 +52,18 @@ if ! kubectl get deployment ingress-nginx-controller -n ingress-nginx >/dev/null
   helm repo update
 
   echo "➡️ Installing ingress-nginx..."
-  helm install ingress-nginx ingress-nginx/ingress-nginx -n $NS
+  helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx
 else
   echo "✔️ NGINX ingress controller already installed."
 fi
 
 echo "⏳ Waiting for ingress controller to become Ready..."
-kubectl rollout status deployment/ingress-nginx-controller -n $NS --timeout=180s
+kubectl rollout status deployment/ingress-nginx-controller -n ingress-nginx --timeout=180s
 
 echo "⏳ Waiting for public LoadBalancer IP..."
 INGRESS_IP=""
 for i in {1..20}; do
-    INGRESS_IP=$(kubectl get svc nginx-ingress-nginx-controller -n $NS -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    INGRESS_IP=$(kubectl get svc nginx-ingress-nginx-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     if [[ -n "$INGRESS_IP" ]]; then
         echo "✔️ Ingress public IP: $INGRESS_IP"
         break
