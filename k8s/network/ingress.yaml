@@ -17,7 +17,7 @@ spec:
       http:
         paths:
           # API Back end
-          - path: /api(/|$)(.*)
+          - path: /sbuasa(/|$)(.*)
             pathType: Prefix
             backend:
               service:
@@ -26,7 +26,15 @@ spec:
                   number: 5000
 
           # Front Streamlit
-          - path: /(.*)
+          - path: /sbuasa
+            pathType: Prefix
+            backend:
+              service:
+                name: streamlit
+                port:
+                  number: 8501
+
+          - path: /
             pathType: Prefix
             backend:
               service:
