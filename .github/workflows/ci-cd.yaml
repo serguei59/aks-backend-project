@@ -16,17 +16,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
-
-  deploy-to-aks:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 
 
       - name: Login to GHCR
-        uses: docker/login-actions@v3
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -40,28 +33,34 @@ jobs:
 
       - name: Push Streamlit image
         run : |
-          docker push ghcr.io/${{ github.repository_owner }}//streamlit-front:latest
+          docker push ghcr.io/${{ github.repository_owner }}/streamlit-front:latest
 
+  deploy-to-aks:
+    runs-on: ubuntu-latest
 
-      - name: Azure login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}   # service principal JSON
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
 
-      - name: Bootstrap AKS infra (RG, AKS, namespace, ingress)
-        run: |
-          bash ./scripts/aks_bootstrap.sh
-      
-      - name: kubectl apply manifests
-        run: |
-          kubectl apply -f k8s/namespace.yaml
-          kubectl apply -f k8s/backend/configmap.yaml -n sbuasa
-          kubectl apply -f k8s/backend/secret.yaml -n sbuasa
-          kubectl apply -f k8s/backend/pvc.yaml -n sbuasa
-          kubectl apply -f k8s/backend/db-deployment.yaml -n sbuasa
-          kubectl apply -f k8s/backend/db-service.yaml -n sbuasa
-          kubectl apply -f k8s/backend/api-deployment.yaml -n sbuasa
-          kubectl apply -f k8s/backend/api-service.yaml -n sbuasa
-          kubectl apply -f k8s/front/front-deployment.yaml -n sbuasa
-          kubectl apply -f k8s/front/front-service.yaml -n sbuasa
-          kubectl apply -f k8s/network/ingress.yaml -n sbuasa
+        - name: Azure login
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}   # service principal JSON
+
+        - name: Bootstrap AKS infra (RG, AKS, namespace, ingress)
+          run: |
+            bash ./scripts/aks_bootstrap.sh
+        
+        - name: kubectl apply manifests
+          run: |
+            kubectl apply -f k8s/namespace.yaml
+            kubectl apply -f k8s/backend/configmap.yaml -n sbuasa
+            kubectl apply -f k8s/backend/secret.yaml -n sbuasa
+            kubectl apply -f k8s/backend/pvc.yaml -n sbuasa
+            kubectl apply -f k8s/backend/db-deployment.yaml -n sbuasa
+            kubectl apply -f k8s/backend/db-service.yaml -n sbuasa
+            kubectl apply -f k8s/backend/api-deployment.yaml -n sbuasa
+            kubectl apply -f k8s/backend/api-service.yaml -n sbuasa
+            kubectl apply -f k8s/front/front-deployment.yaml -n sbuasa
+            kubectl apply -f k8s/front/front-service.yaml -n sbuasa
+            kubectl apply -f k8s/network/ingress.yaml -n sbuasa
