@@ -7,11 +7,41 @@ on:
       - main
 
 jobs:
+  build-image-front:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write # allowing push inside GHCR
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
   deploy-to-aks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        uses: docker/login-actions@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Build Streamlit image
+        run: |
+          cd front
+          docker build -t ghcr.io/${{ github.repository_owner }}/streamlit-front:latest .
+
+      - name: Push Streamlit image
+        run : |
+          docker push ghcr.io/${{ github.repository_owner }}//streamlit-front:latest
+
 
       - name: Azure login
         uses: azure/login@v1
