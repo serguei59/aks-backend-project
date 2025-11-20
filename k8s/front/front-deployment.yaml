@@ -21,7 +21,7 @@ spec:
             - name: API_MODE
               value: "ingress"
 
-            # URL exposée par ton Ingress (à changer après déploiement du Ingress)
+            # URL exposée par ton Ingress (à changer après le déploiement du Ingress)
             - name: API_URL
               value: "http://EXTERNAL-IP/sbuasa-api"
 
@@ -35,5 +35,6 @@ spec:
             limits:
               cpu: "600m"
               memory: "768Mi"
+
       imagePullSecrets:
-            - name: ghcr-secret
+        - name: ghcr-secret
