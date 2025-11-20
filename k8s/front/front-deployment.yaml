@@ -16,7 +16,9 @@ spec:
       containers:
         - name: streamlit
           image: ghcr.io/blackphoenix2020/streamlit-front:latest
-          
+          imagePullSecrets:
+            - name: ghcr-secret
+
           env:
             # Mode Ingress
             - name: API_MODE
