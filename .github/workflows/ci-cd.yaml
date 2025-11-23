@@ -82,7 +82,7 @@ jobs:
           # Récupération de l'External IP du ingress
           echo "Waiting for external IP..."
           sleep 30
-          EXTERNAL_IP=$(kubectl get svc nginx-ingress-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+          EXTERNAL_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           echo "External IP = $EXTERNAL_IP"
 
           # Mise à jour dynamique du ConfigMap front-config
