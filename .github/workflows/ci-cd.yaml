@@ -75,6 +75,7 @@ jobs:
             --dry-run=client -o yaml | kubectl apply -f -
 
           # Déploiement front + ingress
+          kubectl apply -f k8s/front/front-configmap.yaml -n sbuasa
           kubectl apply -f k8s/front/front-deployment.yaml -n sbuasa
           kubectl apply -f k8s/front/front-service.yaml -n sbuasa
           kubectl apply -f k8s/network/ingress.yaml -n sbuasa
