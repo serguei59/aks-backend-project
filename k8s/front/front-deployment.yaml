@@ -21,9 +21,12 @@ spec:
             - name: API_MODE
               value: "ingress"
 
-            # URL exposée par ton Ingress (à changer après le déploiement du Ingress)
+            # API_URL injecté depuis le configmap
             - name: API_URL
-              value: "http://EXTERNAL-IP/sbuasa-api"
+              valueFrom:
+                configMapKeyRef:
+                  name: front-config
+                  key: API_URL
 
           ports:
             - containerPort: 8501

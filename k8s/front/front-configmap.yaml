@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: front-config
+  namespace: sbuasa
+data:
+  # Valeur placeholder — sera patchée automatiquement par le CI/CD après création de l’Ingress
+  API_URL: "http://placeholder/sbuasa-api"
