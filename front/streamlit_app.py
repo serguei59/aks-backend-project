@@ -24,7 +24,9 @@ if API_MODE == "ingress":
     if not INGRESS_API_URL:
         st.error("API_MODE=ingress mais API_URL est vide.")
         st.stop()
-    API_URL = INGRESS_API_URL
+    
+    # Préfixe API INGRESS → /api
+    API_URL = f"{INGRESS_API_URL}/api"
 else:
     API_URL = INTERNAL_API_URL
 

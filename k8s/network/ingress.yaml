@@ -6,16 +6,28 @@ metadata:
   annotations:
     # Pour éviter les erreurs de redirection Streamlit
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
     - host: placeholder.nip.io
       http:
         paths:
-          - path: /
+          # ------- FRONT STREAMLIT ------
+          - path: /?(.*)
             pathType: Prefix
             backend:
               service:
                 name: front-service
                 port:
                   number: 8501
+
+          # -------- API FASTAPI --------
+          - path: /api(/|$)(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: api            # ton service backend
+                port:
+                  number: 5000

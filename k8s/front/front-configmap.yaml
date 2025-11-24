@@ -4,5 +4,5 @@ metadata:
   name: front-config
   namespace: sbuasa
 data:
-  # Le front appelle l’API via le service interne du cluster
-  API_URL: "http://api-service.sbuasa.svc.cluster.local:8000"
+  # Mode par défaut pour acceder à l API : interne (DNS Kubernetes)
+  API_URL: "http://api.sbuasa.svc.cluster.local:5000"
