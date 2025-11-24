@@ -4,5 +4,5 @@ metadata:
   name: front-config
   namespace: sbuasa
 data:
-  # Valeur placeholder — sera patchée automatiquement par le CI/CD après création de l’Ingress
-  API_URL: "http://placeholder/sbuasa-api"
+  # Le front appelle l’API via le service interne du cluster
+  API_URL: "http://api-service.sbuasa.svc.cluster.local:8000"

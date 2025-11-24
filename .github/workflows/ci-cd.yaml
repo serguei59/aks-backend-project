@@ -82,14 +82,20 @@ jobs:
 
           # Récupération de l'External IP du ingress
           echo "Waiting for external IP..."
-          sleep 30
+          sleep 60
           EXTERNAL_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
           echo "External IP = $EXTERNAL_IP"
 
-          # Mise à jour dynamique du ConfigMap front-config
-          kubectl patch configmap front-config -n sbuasa \
-            --type merge \
-            -p "{\"data\": {\"API_URL\": \"http://${EXTERNAL_IP}/sbuasa-api\"}}"
+          # Mise à jour dynamique de l ingress
+          kubectl patch ingress front-ingress -n sbuasa \
+            --type='json' \
+            -p="[
+                {
+                  \"op\": \"replace\",
+                  \"path\": \"/spec/rules/0/host\",
+                  \"value\": \"${EXTERNAL_IP}.nip.io\"
+                }
+              ]"
 
           # Restart du front pour qu'il recharge la config
           kubectl rollout restart deployment streamlit -n sbuasa

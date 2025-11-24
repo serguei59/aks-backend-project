@@ -21,17 +21,14 @@ spec:
             # Mode Ingress
             - name: API_MODE
               value: "ingress"
-
             # API_URL injecté depuis le configmap
             - name: API_URL
               valueFrom:
                 configMapKeyRef:
                   name: front-config
                   key: API_URL
-
           ports:
             - containerPort: 8501
-
           resources:
             requests:
               cpu: "200m"
@@ -39,6 +36,6 @@ spec:
             limits:
               cpu: "600m"
               memory: "768Mi"
-
       imagePullSecrets:
-        - name: ghcr-secret
+        - name: ghcr-secret 
+      
