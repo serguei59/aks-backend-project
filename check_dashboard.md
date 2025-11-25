@@ -91,5 +91,4 @@ nslookup placeholder.nip.io
 ---
 
 ## 🎁 10 — Version courte
-**Tous les services fonctionnent : front, API, DB, ingress, DNS, communications internes.**  
-👉 **Front : https://placeholder.nip.io**
+le front n est pour l instant pas accesible
