@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamlit
+  namespace: sbuasa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: streamlit
+  template:
+    metadata:
+      labels:
+        app: streamlit
+    spec:
+      containers:
+        - name: streamlit
+          image: ghcr.io/serguei59/streamlit-front:latest
+          imagePullPolicy: Always
+          env:
+            # Connection front-api en mode internal
+            - name: API_MODE
+              valueFrom:
+                configMapKeyRef:
+                  name: front-config
+                  key: API_URL
+            
+            - name: API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: front-config
+                  key: API_URL
+          ports:
+            - containerPort: 8501
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "600m"
+              memory: "768Mi"
+      imagePullSecrets:
+        - name: ghcr-secret 
+      
