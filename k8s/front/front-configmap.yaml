@@ -5,4 +5,5 @@ metadata:
   namespace: sbuasa
 data:
   # Mode par défaut pour acceder à l API : interne (DNS Kubernetes)
+  API_MODE: internal
   API_URL: "http://api.sbuasa.svc.cluster.local:5000"

@@ -18,10 +18,13 @@ spec:
           image: ghcr.io/serguei59/streamlit-front:latest
           imagePullPolicy: Always
           env:
-            # Mode Ingress
+            # Connection front-api en mode internal
             - name: API_MODE
-              value: "ingress"
-            # API_URL injecté depuis le configmap
+              valueFrom:
+                configMapKeyRef:
+                  name: front-config
+                  key: API_URL
+            
             - name: API_URL
               valueFrom:
                 configMapKeyRef:
