@@ -17,6 +17,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: front-service
+                name: streamlit
                 port:
                   number: 8501

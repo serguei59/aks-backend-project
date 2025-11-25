@@ -61,3 +61,14 @@ Kubernetes manifests
 -   Credentials **must not** be shared.
 -   The project cannot deploy without `AZURE_CREDENTIALS`.
 
+## 6. Project architecture
+
+AKS cluster
+ ├─ namespace ingress-nginx   → contient ton NGINX Ingress Controller (helm)
+ │                             → fournit l’adresse LoadBalancer publique
+ │
+ └─ namespace sbuasa          → contient :
+      - front (Streamlit)
+      - api (FastAPI)
+      - mysql
+      - pvc
