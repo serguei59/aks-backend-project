@@ -20,6 +20,7 @@ else
   echo "✔️ Resource Group already exists."
 fi
 
+
 ############################################
 # AKS CLUSTER
 ############################################
@@ -32,6 +33,7 @@ if ! az aks show -g $RG -n $AKS >/dev/null 2>&1; then
     --node-count 2 \
     --enable-addons monitoring \
     --generate-ssh-keys
+
 else
   echo "✔️ AKS cluster already exists."
 fi
@@ -39,11 +41,13 @@ fi
 echo "🔐 Getting AKS credentials..."
 az aks get-credentials --resource-group $RG --name $AKS --admin --overwrite-existing
 
+
 ############################################
 # WAIT FOR NODES
 ############################################
 echo "⏳ Waiting for nodes to be ready..."
 kubectl wait --for=condition=Ready nodes --all --timeout=600s
+
 
 ############################################
 # INGRESS-NGINX NAMESPACE
@@ -56,75 +60,55 @@ else
   echo "✔️ Namespace ingress-nginx already exists."
 fi
 
+
 ############################################
-# INSTALL INGRESS CONTROLLER (helm)
+# INSTALL INGRESS CONTROLLER
 ############################################
 echo "🌐 Checking NGINX Ingress Controller..."
 if ! kubectl get deployment ingress-nginx-controller -n ingress-nginx >/dev/null 2>&1; then
+  
   echo "➡️ Adding Helm repository for ingress-nginx..."
   helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
   helm repo update
 
   echo "➡️ Installing ingress-nginx controller..."
   helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx
+
 else
   echo "✔️ NGINX ingress controller already installed."
 fi
 
-echo "⏳ Waiting for ingress controller deployment to become Ready..."
+
+############################################
+# WAIT FOR INGRESS CONTROLLER
+############################################
+echo "⏳ Waiting for ingress controller to become Ready..."
 kubectl rollout status deployment/ingress-nginx-controller -n ingress-nginx --timeout=300s
 
+
 ############################################
-# CREATE OR REUSE A PUBLIC IP IN nodeResourceGroup (MC_...)
+# GET LOAD BALANCER IP
 ############################################
-echo "🔍 Determining AKS node resource group (nodeResourceGroup)..."
-NODE_RG=$(az aks show -g $RG -n $AKS --query nodeResourceGroup -o tsv)
-if [[ -z "$NODE_RG" ]]; then
-  echo "❌ Could not determine nodeResourceGroup. Aborting."
-  exit 1
-fi
-echo "✔ nodeResourceGroup = $NODE_RG"
-
-PIP_NAME="sbuasa-nginx-pip"
-
-# create public ip if not exists
-if ! az network public-ip show -g "$NODE_RG" -n "$PIP_NAME" >/dev/null 2>&1; then
-  echo "➡️ Creating Public IP '$PIP_NAME' in resource group $NODE_RG..."
-  az network public-ip create \
-    --resource-group "$NODE_RG" \
-    --name "$PIP_NAME" \
-    --sku Standard \
-    --allocation-method Static \
-    --query "publicIp.ipAddress" -o tsv >/dev/null
-  echo "✔ Public IP resource created: $PIP_NAME (in $NODE_RG)"
-else
-  echo "✔ Public IP $PIP_NAME already exists in $NODE_RG"
-fi
-
-# Annotate the ingress service to use this PIP (this will instruct Azure LB to use the given public ip)
-echo "➡️ Annotating ingress-nginx service to use PIP '$PIP_NAME'..."
-kubectl -n ingress-nginx patch svc ingress-nginx-controller \
-  -p "{\"metadata\": {\"annotations\": {\"service.beta.kubernetes.io/azure-pip-name\": \"$PIP_NAME\"}}}" || true
-
-# Wait for the LoadBalancer to get an external IP
 echo "⏳ Waiting for public LoadBalancer IP..."
 INGRESS_IP=""
-for i in {1..40}; do
-  INGRESS_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || true)
-  if [[ -n "$INGRESS_IP" && "$INGRESS_IP" != "null" ]]; then
-    echo "✔️ Ingress public IP: $INGRESS_IP"
-    break
-  fi
-  echo "⏳ LoadBalancer IP not assigned yet (attempt $i/40)..."
-  sleep 15
+for i in {1..20}; do
+    INGRESS_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    
+    if [[ -n "$INGRESS_IP" ]]; then
+        echo "✔️ Ingress public IP: $INGRESS_IP"
+        break
+    fi
+
+    echo "⏳ LoadBalancer IP not assigned yet (attempt $i/20)..."
+    sleep 15
 done
 
 if [[ -z "$INGRESS_IP" ]]; then
-  echo "❌ Could not obtain the Ingress LoadBalancer IP after waiting. Inspect the service and Azure PIP."
-  kubectl get svc ingress-nginx-controller -n ingress-nginx -o yaml
-  exit 1
+    echo "❌ Could not obtain the Ingress LoadBalancer IP."
+    exit 1
 fi
 
+
 echo "==============================================="
-echo "🎉 AKS BOOTSTRAP COMPLETED SUCCESSFULLY! (INGRESS IP: $INGRESS_IP)"
+echo "🎉 AKS BOOTSTRAP COMPLETED SUCCESSFULLY!"
 echo "==============================================="
