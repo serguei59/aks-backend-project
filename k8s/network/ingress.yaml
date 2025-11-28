@@ -22,3 +22,15 @@ spec:
                 name: front-service
                 port:
                   number: 8501
+
+        # 2) Fallback si l’utilisateur tape directement l’IP brute (http://YOUR_IP)
+    - host: ""
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: front-service
+                port:
+                  number: 8501
