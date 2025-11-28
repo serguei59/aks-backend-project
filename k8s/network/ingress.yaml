@@ -6,6 +6,8 @@ metadata:
   annotations:
     # Pour éviter les erreurs de redirection Streamlit
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+
 spec:
   ingressClassName: nginx
   rules:
