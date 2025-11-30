@@ -13,7 +13,7 @@ jobs:
 
     permissions:
       contents: read
-      packages: write
+      packages: write   # nécessaire pour push dans GHCR
 
     steps:
 
@@ -54,8 +54,9 @@ jobs:
         run: |
           bash ./scripts/aks_bootstrap.sh
 
-      - name: Apply Kubernetes manifests
+      - name: Apply Kubernetes manifests + update ConfigMap dynamically
         run: |
+          # Déploiement backend
           kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/backend/configmap.yaml -n sbuasa
           kubectl apply -f k8s/backend/secret.yaml -n sbuasa
@@ -65,6 +66,7 @@ jobs:
           kubectl apply -f k8s/backend/api-deployment.yaml -n sbuasa
           kubectl apply -f k8s/backend/api-service.yaml -n sbuasa
 
+          # Secret GHCR pour le pull AKS
           kubectl create secret docker-registry ghcr-secret \
             --docker-server=ghcr.io \
             --docker-username=${{ github.actor }} \
@@ -72,36 +74,48 @@ jobs:
             -n sbuasa \
             --dry-run=client -o yaml | kubectl apply -f -
 
+          # Déploiement front + ingress
           kubectl apply -f k8s/front/front-configmap.yaml -n sbuasa
           kubectl apply -f k8s/front/front-deployment.yaml -n sbuasa
           kubectl apply -f k8s/front/front-service.yaml -n sbuasa
           kubectl apply -f k8s/network/ingress.yaml -n sbuasa
 
-      - name: Patch Ingress with External IP
-        run: |
+          # === Récupération de l'External IP du ingress (après bootstrap) ===
           echo "Waiting for external IP..."
-          sleep 10
+          sleep 15
 
+          # On récupère l'IP du service ingress-nginx-controller
           EXTERNAL_IP=""
           for i in {1..40}; do
-            EXTERNAL_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx \
-              -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || true)
-
+            EXTERNAL_IP=$(kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || true)
             if [[ -n "$EXTERNAL_IP" && "$EXTERNAL_IP" != "null" ]]; then
               echo "✔ EXTERNAL_IP = $EXTERNAL_IP"
               break
             fi
-
             echo "… waiting for LB IP (attempt $i/40)"
             sleep 10
           done
 
+          if [[ -z "$EXTERNAL_IP" ]]; then
+            echo "❌ Could not get external IP for ingress-nginx-controller."
+            kubectl get svc ingress-nginx-controller -n ingress-nginx -o yaml
+            exit 1
+          fi
+
+          # === Patch du host dans l'Ingress front ===
           kubectl patch ingress front-ingress -n sbuasa \
             --type='json' \
             -p="[
-              {\"op\": \"replace\",
-               \"path\": \"/spec/rules/0/host\",
-               \"value\": \"${EXTERNAL_IP}.nip.io\"}
-            ]"
+                {
+                  \"op\": \"replace\",
+                  \"path\": \"/spec/rules/0/host\",
+                  \"value\": \"${EXTERNAL_IP}.nip.io\"
+                }
+              ]"
 
+              
+          # Restart du front pour qu'il recharge la config
+          kubectl rollout restart deployment streamlit -n sbuasa
+
+          # Afficher url finale
           echo "Front URL : http://${EXTERNAL_IP}.nip.io"
