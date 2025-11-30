@@ -72,3 +72,13 @@ AKS cluster
       - api (FastAPI)
       - mysql
       - pvc
+
+## 7. Project's Technical Documentation
+
+```
+cd mkdocs_aks_library
+pip install mkdocs
+mkdocs serve
+```
+
+open local link with http://127.0.0.1:8000/

@@ -1,0 +1,61 @@
+site_name: AKS & Kubernetes Technical Library
+site_description: Personal technical knowledge base for Kubernetes, AKS, networking, ingress and CI/CD
+theme:
+  name: mkdocs
+nav:
+  - Home: index.md
+  - 01 - Kubernetes Fundamentals:
+      - Pods: 01-kubernetes/pods.md
+      - Services: 01-kubernetes/services.md
+      - Deployments: 01-kubernetes/deployments.md
+      - Namespaces: 01-kubernetes/namespaces.md
+      - ConfigMaps: 01-kubernetes/configmaps.md
+      - Secrets: 01-kubernetes/secrets.md
+      - Volumes & PVCs: 01-kubernetes/volumes_pvc.md
+      - NodePort in practice: 01-kubernetes/nodeport.md
+      - Container lifecycle & probes: 01-kubernetes/probes.md
+  - 02 - AKS Specifics:
+      - What is the nodeResourceGroup: 02-aks/node_resource_group.md
+      - Why AKS creates a Load Balancer: 02-aks/aks_load_balancer.md
+      - How AKS manages Public IPs: 02-aks/public_ips.md
+      - Why PIPs live in the MC_* RG: 02-aks/pip_location.md
+      - Azure cloud-provider in Kubernetes: 02-aks/cloud_provider.md
+      - Node pools & VMSS: 02-aks/nodepools_vmss.md
+      - Why AKS does not create an Ingress by default: 02-aks/ingress_not_auto.md
+      - How to troubleshoot aks deployment: 02_aks/aks_troubleshooting.md
+  - 03 - Networking:
+      - ClusterIP vs NodePort vs LoadBalancer: 03-networking/clusterip_nodeport_lb.md
+      - How Azure LB NATs port 80: 03-networking/azure_nat_80.md
+      - How Kubernetes exposes internal ports: 03-networking/internal_ports.md
+      - Health probes in Azure & K8s: 03-networking/health_probes.md
+      - Full HTTP path: 03-networking/http_path.md
+  - 04 - Ingress & Ingress Controller:
+      - Ingress vs Ingress Controller: 04-ingress/ingress_vs_controller.md
+      - Why ingress-nginx alone does not expose apps: 04-ingress/why_needs_lb.md
+      - publishService.enabled=true explained: 04-ingress/publish_service.md
+      - Ingress YAML structure: 04-ingress/ingress_yaml_structure.md
+      - Public host vs internal service: 04-ingress/host_vs_service.md
+      - nip.io explained: 04-ingress/nip_io.md
+      - Why we patch Ingress in CI/CD: 04-ingress/patch_in_pipeline.md
+      - Why JSON Patch and not merge: 04-ingress/json_patch.md
+      - How the ingress controller watches events: 04-ingress/events_watch.md
+      - How routing works internally: 04-ingress/internal_routing.md
+      - Enabling HTTPS with cert-manager: 04-ingress/https_cert_manager.md
+  - 05 - CI/CD with GitHub Actions:
+      - Multi-job pipelines: 05-ci-cd/pipelines.md
+      - Secrets (GHCR_PAT, AZURE_CREDENTIALS): 05-ci-cd/secrets.md
+      - Pushing images to GHCR: 05-ci-cd/ghcr.md
+      - kubectl apply vs kubectl patch: 05-ci-cd/apply_vs_patch.md
+      - Dynamic Ingress patching: 05-ci-cd/dynamic_ingress_patch.md
+      - What kubectl rollout restart really does: 05-ci-cd/rollout_restart.md
+      - apply vs replace: 05-ci-cd/apply_vs_replace.md
+      - Waiting for LB external IP in scripts: 05-ci-cd/wait_lb_ip.md
+      - End-to-end AKS CI/CD best practices: 05-ci-cd/aks_cicd_best_practices.md
+  - 06 - Architecture & Best Practices:
+      - Why separate ingress from internal services: 06-architecture/ingress_vs_internal.md
+      - Microservices vs monolith on K8s: 06-architecture/microservices_vs_monolith.md
+      - Logs & observability: 06-architecture/logging_observability.md
+      - OCI image policy (GHCR): 06-architecture/oci_policy.md
+      - Security (RBAC, NetworkPolicies, Secrets, Identity): 06-architecture/security.md
+      - How to debug in Kubernetes: 06-architecture/debugging.md
+      - AKS architecture diagrams (conceptual): 06-architecture/aks_diagrams.md
