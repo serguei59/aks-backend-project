@@ -48,7 +48,7 @@ kubectl wait --for=condition=Ready nodes --all --timeout=600s
 ############################################
 # DETERMINE NODE RESOURCE GROUP
 ############################################
-echo "🔍 Determining AKS node resource group (MC_...)"
+echo "🔍 Determining AKS node resource group (MC_..)"
 NODE_RG=$(az aks show -g $RG -n $AKS --query nodeResourceGroup -o tsv)
 echo "✔ nodeResourceGroup = $NODE_RG"
 
