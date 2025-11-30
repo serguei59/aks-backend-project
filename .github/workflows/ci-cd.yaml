@@ -58,7 +58,6 @@ jobs:
           kubectl apply -f k8s/namespace.yaml
           kubectl apply -f k8s/backend/configmap.yaml -n sbuasa
           kubectl apply -f k8s/backend/secret.yaml -n sbuasa
-          kubectl apply -f k8s/backend/pvc.yaml -n sbuasa
           kubectl apply -f k8s/backend/db-deployment.yaml -n sbuasa
           kubectl apply -f k8s/backend/db-service.yaml -n sbuasa
           kubectl apply -f k8s/backend/api-deployment.yaml -n sbuasa

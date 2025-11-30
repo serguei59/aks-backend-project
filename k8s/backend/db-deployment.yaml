@@ -48,12 +48,3 @@ spec:
             limits:
               cpu: "500m"
               memory: "1Gi"
-
-          volumeMounts:
-            - name: mysql-volume
-              mountPath: /var/lib/mysql
-
-      volumes:
-        - name: mysql-volume
-          persistentVolumeClaim:
-            claimName: mysql-pvc
