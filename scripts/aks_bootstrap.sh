@@ -74,7 +74,7 @@ kubectl rollout status deployment/ingress-nginx-controller -n ingress-nginx --ti
 ############################################
 # WAIT FOR LB TO OBTAIN AUTOMATIC IP
 ############################################
-echo "⏳ Waiting for LoadBalancer to receive IP..."
+echo "⏳ Waiting for LoadBalancer to receive IP...."
 
 INGRESS_IP=""
 for i in {1..40}; do
