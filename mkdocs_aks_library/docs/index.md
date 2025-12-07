@@ -3,8 +3,8 @@ Technical Documentation Library
 
 This documentation provides a **practical and opinionated reference** built from the AKS Backend–Frontend project.
 
-Repository:
-👉 https://github.com/serguei59/aks-backend-project
+## Repository
+👉 [GitHub – aks-backend-project](https://github.com/serguei59/aks-backend-project)
 
 ---
 
@@ -68,5 +68,5 @@ This documentation is based on the following deployment:
 - ingress-nginx
 
 See the full project here:
-👉 https://github.com/serguei59/aks-backend-project
+👉 [GitHub – aks-backend-project](https://github.com/serguei59/aks-backend-project)
 
