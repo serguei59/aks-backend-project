@@ -16,7 +16,7 @@ Important points:
 - Cluster-scoped resources:
   - Nodes, PersistentVolumes, StorageClasses…
 
-In your AKS project:
+In this AKS project:
 
 - `sbuasa` namespace contains your app (API, DB, front).
 - `ingress-nginx` namespace contains the ingress controller itself.

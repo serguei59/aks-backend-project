@@ -14,7 +14,7 @@ Key points:
   - env vars,
   - mounted as files.
 
-In your project:
+In this project:
 
 - A Secret is used to store MySQL credentials for the DB Deployment.
 - The API and DB Deployments read those credentials from the Secret instead of hard-coding them in YAML.

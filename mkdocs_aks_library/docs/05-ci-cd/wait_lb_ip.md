@@ -6,7 +6,7 @@ When a LoadBalancer Service is created, it can take some time for the cloud-prov
 - configure the Load Balancer,
 - update the Service status.
 
-In your script:
+In our script:
 
 ```bash
 EXTERNAL_IP=""

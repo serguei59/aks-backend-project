@@ -17,6 +17,15 @@ This documentation covers:
 - Troubleshooting
 - Architecture diagrams
 
+## Running Workflows (Evaluator)
+
+All workflows can be started manually from GitHub:
+
+GitHub → Actions → Select workflow → Run workflow
+
+No local tooling or kubectl commands are required.
+
+
 ## 🚀 Overview
 
 This project demonstrates a **complete but intentionally simple AKS deployment**, combining:
