@@ -9,6 +9,7 @@ on:
       - mkdocs_aks_library/**
 
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: write

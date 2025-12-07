@@ -19,7 +19,10 @@ This documentation covers:
 
 ## Running Workflows (Evaluator)
 
-All workflows can be started manually from GitHub:
+This repository uses a workflow orchestrator to coordinate documentation deployment and AKS infrastructure provisioning.
+This approach improves readability, reproducibility, and evaluation.
+
+All workflows can be started manually from Full Pipeline orchestrator workflow in GitHub:
 
 GitHub → Actions → Select workflow → Run workflow
 
@@ -142,7 +145,9 @@ API --> DB["MySQL Database"]
 ```text
 .
 ├─ .github/workflows/
-│   └─ aks-deploy.yml
+│   └─ ci-cd.yml
+│   └─ full-pipeline.yml
+│   └─ mkdocs-deploy.yml
 │
 ├─ k8s/
 │   ├─ backend/
