@@ -3,6 +3,11 @@ name: Full Pipeline
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write   # ✅ autorise mkdocs gh-deploy
+  pages: write
+  id-token: write
+
 jobs:
   deploy-docs:
     uses: ./.github/workflows/mkdocs-deploy.yaml
