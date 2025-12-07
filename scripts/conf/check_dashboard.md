@@ -91,4 +91,4 @@ nslookup placeholder.nip.io
 ---
 
 ## 🎁 10 — Version courte
-le front n est pour l instant pas accesible
+le front n est pour l instant pas accesible.

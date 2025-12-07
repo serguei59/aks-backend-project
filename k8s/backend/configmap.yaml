@@ -4,7 +4,7 @@ metadata:
   name: mysql-configmap
   namespace: sbuasa
 data:
-  database_name: clients_sbuasa
+  database_name: clients
   database_host: mysql
   database_port: "3306"
   
