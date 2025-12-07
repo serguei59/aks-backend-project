@@ -14,7 +14,7 @@ Key ideas:
   - it creates a new ReplicaSet,
   - gradually shifts traffic from old Pods to new Pods.
 
-In your project:
+In this project:
 
 - `streamlit` Deployment runs the frontend image from GHCR.
 - `api` Deployment runs the backend.

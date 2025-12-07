@@ -15,7 +15,7 @@ Important:
   - mounted as files,
   - consumed as environment variables.
 
-Example in your project:
+Example in this project:
 
 - `front-config` (or similar) ConfigMap that sets:
   - `API_URL` used by the Streamlit frontend to call the backend API.

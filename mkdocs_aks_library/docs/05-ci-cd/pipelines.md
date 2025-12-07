@@ -1,6 +1,6 @@
 # Multi-Job Pipelines in GitHub Actions
 
-In your project, the CI/CD pipeline has two main jobs:
+In this project, the CI/CD pipeline has two main jobs:
 
 1. **build-image-front**
    - Checks out the repo,

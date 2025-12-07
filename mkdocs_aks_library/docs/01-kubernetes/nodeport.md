@@ -11,7 +11,7 @@ In a managed cloud (AKS):
 - Instead, a **LoadBalancer** Service is created:
   - Azure Load Balancer forwards traffic from PublicIP:80 → NodePort → Pods.
 
-So for you:
+So in this project:
 
 - NodePorts are mostly an **implementation detail** used by Azure LB.
 - You interact with:

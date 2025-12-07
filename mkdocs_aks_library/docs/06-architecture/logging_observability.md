@@ -16,7 +16,7 @@ On AKS:
 - You can enable Azure Monitor / Container Insights.
 - You can also deploy your own logging stack.
 
-For your project, starting with:
+For this project, starting with:
 
 - `kubectl logs`,
 - basic metrics from AKS,

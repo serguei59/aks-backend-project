@@ -15,7 +15,7 @@ You can think of it like this:
 - Ingress = configuration (desired state).
 - Ingress Controller = engine (actual data plane).
 
-In your project:
+In this project:
 
 - You installed **nginx-ingress** via Helm as the controller.
 - You created `front-ingress` as the configuration that tells nginx how to route to `front-service`.

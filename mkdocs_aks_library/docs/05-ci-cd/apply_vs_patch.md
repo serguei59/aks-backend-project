@@ -10,7 +10,7 @@
   - Does not require full YAML.
   - Useful for dynamic or one-off changes (like Ingress host).
 
-In your pipeline:
+In the pipeline' project:
 
 - `apply` is used for static manifests (Deployments, Services, ConfigMaps).
 - `patch` is used for the Ingress host, which depends on a dynamic value (external IP).

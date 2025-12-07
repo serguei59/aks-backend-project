@@ -19,4 +19,4 @@ On K8s:
   - number of Services,
   - complexity of communication and observability.
 
-Your current architecture (frontend + API + DB) is already a **small microservice-oriented system**.
+The current architecture (frontend + API + DB) is already a **small microservice-oriented system**.

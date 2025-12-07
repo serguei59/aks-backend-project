@@ -14,9 +14,9 @@ Probes can be:
 - TCP checks,
 - command checks (`exec`).
 
-In your project:
+In any project:
 
 - You can (and should) add probes to:
-  - the API Deployment (e.g. `/healthz`),
+  - the API Deployment (e.g. `/health`),
   - the Streamlit frontend (simple HTTP probe on `/`),
   - so that Kubernetes and the Azure LB stop sending traffic to broken Pods.

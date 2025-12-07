@@ -29,7 +29,7 @@ Example: your `mysql` Service in namespace `sbuasa`.
   - `ingress-nginx-controller` Service,
   - occasionally direct public Services (not recommended for apps; better use Ingress).
 
-In your AKS project:
+In this AKS project:
 
 - `front-service` and `api` are **ClusterIP**.
 - `ingress-nginx-controller` is a **LoadBalancer** that receives all public traffic and routes it internally.

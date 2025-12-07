@@ -11,7 +11,7 @@ This is extremely convenient when:
 - you want to test host-based routing in Kubernetes,
 - you want to use Ingress with a real `Host` header, without managing DNS.
 
-In your project:
+In this project:
 
 - You patch the Ingress host with `${EXTERNAL_IP}.nip.io`.
 - No manual DNS configuration is required.
