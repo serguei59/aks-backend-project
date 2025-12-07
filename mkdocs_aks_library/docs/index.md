@@ -1,4 +1,3 @@
-```markdown
 # AKS Backend–Frontend Project  
 Technical Documentation Library
 
