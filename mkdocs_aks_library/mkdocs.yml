@@ -1,7 +1,19 @@
-site_name: AKS & Kubernetes Technical Library
+site_name: AKS Backend-Frontend Technical Library
 site_description: Personal technical knowledge base for Kubernetes, AKS, networking, ingress and CI/CD
+site_author: Serge BUASA
+
+docs_dir: docs
+
+site_url: https://serguei59.github.io/AKS-BACKEND-PROJECT/
+
 theme:
-  name: mkdocs
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.expand
+    - toc.integrate
+
 nav:
   - Home: index.md
   - 01 - Kubernetes Fundamentals:

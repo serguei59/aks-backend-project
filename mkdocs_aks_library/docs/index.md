@@ -1,12 +1,27 @@
-# AKS & Kubernetes Technical Library
+# AKS Backend-Frontend Project
 
-This mini-site is a personal technical knowledge base built around a concrete Azure Kubernetes Service (AKS) project:
+This technical library documents the architecture and implementation
+of the **AKS Backend-Frontend project**.
 
-- A Streamlit frontend
-- A Python API backend
-- A MySQL database
-- Everything deployed on AKS with nginx-ingress
-- Automated with a GitHub Actions CI/CD pipeline
+## Repository
+👉 https://github.com/serguei59>/aks-backend-project
+
+## Project goals
+- Deploy a full backend/frontend stack on AKS
+- Automate deployment using GitHub Actions
+- Use Ingress for public exposure
+- Keep API private when possible
+- Follow cloud & Kubernetes best practices
+
+## Content
+This documentation explains:
+- Kubernetes concepts
+- AKS specific mechanisms
+- Networking and Ingress routing
+- CI/CD workflows
+- Troubleshooting techniques
+- Architecture decisions
+
 
 The goal of this documentation is **not** to be an exhaustive theory book, but a **practical, opinionated reference** you can reuse across real projects.
 
