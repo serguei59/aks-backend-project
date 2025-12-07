@@ -7,7 +7,7 @@ FastAPI API + MySQL + Streamlit Frontend on Azure Kubernetes Service (AKS)
 
 Full AKS & Kubernetes technical documentation is available here:
 
-👉 **https://serguei59.github.io/aks-backend_project/**
+👉 **https://serguei59.github.io/aks-backend-project/**
 
 This documentation covers:
 - Kubernetes fundamentals
