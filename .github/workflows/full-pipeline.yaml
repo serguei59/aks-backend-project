@@ -1,0 +1,11 @@
+name: Full Pipeline
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-docs:
+    uses: ./.github/workflows/mkdocs-deploy.yaml
+
+  deploy-aks:
+    uses: ./.github/workflows/ci-cd.yaml

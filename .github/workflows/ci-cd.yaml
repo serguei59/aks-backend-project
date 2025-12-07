@@ -3,7 +3,8 @@ name: CI-CD AKS
 on:
   push:
     branches: [ feature/k8s_api-mysql, main ]
-  workflow_dispatch: 
+  workflow_dispatch:
+  workflow_call: 
 
 jobs:
 
