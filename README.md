@@ -145,7 +145,9 @@ API --> DB["MySQL Database"]
 ```text
 .
 ├─ .github/workflows/
-│   └─ aks-deploy.yml
+│   └─ ci-cd.yml
+│   └─ full-pipeline.yml
+│   └─ mkdocs-deploy.yml
 │
 ├─ k8s/
 │   ├─ backend/
