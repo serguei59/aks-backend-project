@@ -1,6 +1,8 @@
 name: Full Pipeline
 
 on:
+  push:
+    branches: [ feature/k8s_api-mysql, main ]
   workflow_dispatch:
 
 permissions:
