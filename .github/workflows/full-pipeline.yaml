@@ -9,6 +9,7 @@ permissions:
   contents: write   # ✅ autorise mkdocs gh-deploy
   pages: write
   id-token: write
+  packages: write
 
 jobs:
   deploy-docs:
