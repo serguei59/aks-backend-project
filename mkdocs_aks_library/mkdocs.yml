@@ -56,6 +56,7 @@ nav:
   - 05 - CI/CD with GitHub Actions:
       - Multi-job pipelines: 05-ci-cd/pipelines.md
       - Secrets (GHCR_PAT, AZURE_CREDENTIALS): 05-ci-cd/secrets.md
+      - Secrets & Workflow Orchestration: 05_ci-cd/secrets-workflow-orchestration.md
       - Pushing images to GHCR: 05-ci-cd/ghcr.md
       - kubectl apply vs kubectl patch: 05-ci-cd/apply_vs_patch.md
       - Dynamic Ingress patching: 05-ci-cd/dynamic_ingress_patch.md
