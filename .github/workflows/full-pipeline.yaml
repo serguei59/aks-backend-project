@@ -1,16 +1,31 @@
 name: Full Pipeline
 
 on:
+  push:
+    branches: [ main, feature/k8s_api-mysql ]
   workflow_dispatch:
 
 permissions:
-  contents: write   # ✅ autorise mkdocs gh-deploy
+  contents: write      # requis pour mkdocs gh-deploy
   pages: write
   id-token: write
+  packages: write
 
 jobs:
+
   deploy-docs:
+    name: Deploy MkDocs
     uses: ./.github/workflows/mkdocs-deploy.yaml
+    permissions: 
+      contents: write
+      pages: write
+      id-token: write
 
   deploy-aks:
+    name: Deploy AKS Stack
+    needs: deploy-docs
     uses: ./.github/workflows/ci-cd.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      packages: write

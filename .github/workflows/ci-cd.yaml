@@ -2,9 +2,14 @@ name: CI-CD AKS
 
 on:
   push:
-    branches: [ feature/k8s_api-mysql, main ]
+    branches: [ main ]
   workflow_dispatch:
-  workflow_call: 
+  workflow_call:
+    secrets:
+      AZURE_CREDENTIALS:
+        required: true
+      GHCR_PAT:
+        required: true 
 
 jobs:
 
