@@ -25,6 +25,7 @@ jobs:
     name: Deploy AKS Stack
     needs: deploy-docs
     uses: ./.github/workflows/ci-cd.yaml
+    secrets: inherit
     permissions:
       contents: read
       packages: write
