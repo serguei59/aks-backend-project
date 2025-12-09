@@ -16,9 +16,15 @@ jobs:
   deploy-docs:
     name: Deploy MkDocs
     uses: ./.github/workflows/mkdocs-deploy.yaml
+    permissions: 
+      contents: write
+      pages: write
+      id-token: write
 
   deploy-aks:
     name: Deploy AKS Stack
     needs: deploy-docs
     uses: ./.github/workflows/ci-cd.yaml
-    
+    permissions:
+      contents: read
+      packages: write
